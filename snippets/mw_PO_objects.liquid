@@ -1,0 +1,69 @@
+<style>.mw-product-options .mw-init-spinner{width:100%;text-align:center}.mw-product-options .mw-init-spinner>div{width:18px;height:18px;background-color:#999;border-radius:100%;display:inline-block;-webkit-animation:sk-bouncedelay 1.4s infinite ease-in-out both;animation:sk-bouncedelay 1.4s infinite ease-in-out both}.mw-product-options .mw-init-spinner .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.mw-product-options .mw-init-spinner .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes sk-bouncedelay{0%,100%,80%{-webkit-transform:scale(0)}40%{-webkit-transform:scale(1)}}@keyframes sk-bouncedelay{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}</style>
+<script type="text/javascript"></script>
+<script type="text/javascript">
+window.mwProductOptionsObjects = {
+  product: {{ product | json }},
+  cart: {{ cart | json }},
+  template_name: {{ template.name | json }},
+  shop: {
+    domain: {{ shop.permanent_domain | json }},
+    money_format : {{ shop.money_format  | json }},
+    money_with_currency_format : {{ shop.money_with_currency_format  | json }}
+  }
+};
+
+{% if product %}
+  {% for variant in product.variants %}
+    window.mwProductOptionsObjects.product.variants[{{ forloop.index | minus: 1}}].inventory_quantity = {{ variant.inventory_quantity | default: 0 }};
+    window.mwProductOptionsObjects.product.variants[{{ forloop.index | minus: 1}}].inventory_management = {{ variant.inventory_management | json }};
+    window.mwProductOptionsObjects.product.variants[{{ forloop.index | minus: 1}}].inventory_policy = {{ variant.inventory_policy | json }};
+  {% endfor %}
+{% endif %}
+
+function mwShowInitSpinner() {
+  var opt = document.getElementsByClassName('mw-product-options');
+  if (opt.length > 0) {
+    var timeSpinner = 6000;
+    opt[0].innerHTML = '<div id="mw-apo-init-spinner" class="mw-init-spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
+    setTimeout(function(){ var spinner = document.getElementById('mw-apo-init-spinner'); spinner && spinner.parentNode.removeChild(spinner); }, timeSpinner);
+  }
+}
+mwShowInitSpinner();
+"use strict";
+
+function productPrice(params) {
+  return parseFloat($(".current_price .money").text().split("£")[1]).toFixed(2);
+}
+
+window.mwProductOptionsObjects.onEvent = function (eventName, mwJquery) {
+  if (eventName === 'initialize-start') {
+    mwJquery('body').on('mw_apo', function (event, action) {
+      if (action === 'end-initialize') {
+        if ($('.mw-options-container').length) {
+          jQuery("body").on("mwAfterUpdatePrices", function (event, action) {
+            // console.log(productPrice());
+            document.getElementsByTagName("klarna-placement")[0].setAttribute("data-purchase-amount", productPrice()*100);
+            window.KlarnaOnsiteService = window.KlarnaOnsiteService || []
+            window.KlarnaOnsiteService.push({ eventName: 'refresh-placements' })
+          });
+          setInterval(() => {
+            var shopifySelectedValue = $('.single-option-selector').val();
+
+            if ($('select[id^="product-select"]').length) {
+              $('select[id^="product-select"][style="display: none;"] option').each(function (index, element) {
+                var $this = $(this);
+                var value = $this.attr('value');
+                if (shopifySelectedValue === $this.text()) {
+                  $('select[id^="product-select"] option').removeAttr('selected')
+                  $this.attr('selected', 'selected')
+                  $this.parent().val(value)
+                }
+              });
+            }
+          }, 10);
+        }
+      }
+    });
+  }
+};
+</script>

@@ -1,0 +1,1 @@
+{% layout none %}{% capture product_handle %}{{ search.terms | escape }}{% endcapture %}{% assign product_handle = product_handle | split: '|' %}[{% for p in product_handle %}{{ all_products[p] | json  }}{% if forloop.last == true %}{% else %},{% endif %}{% endfor %}]

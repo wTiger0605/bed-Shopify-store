@@ -1,0 +1,16 @@
+{% comment %}
+  The contents of the page.faq.liquid template can be found in /sections/page-faq-template.liquid
+{% endcomment %}
+
+<div class="container main content">
+  <div class="sixteen columns page clearfix">
+    {% unless section.settings.show_banner %}
+      <h1>
+        {{ page.title }}
+      </h1>
+      <div class="feature_divider"></div>
+    {% endunless %}
+  </div>
+</div>
+{% section 'page-details-faq-template' %}
+{% section 'page-faq-template' %}

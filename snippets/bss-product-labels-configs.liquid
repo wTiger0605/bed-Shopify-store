@@ -1,0 +1,15 @@
+<script>
+              if (typeof BSS_PL == 'undefined') {
+                  var BSS_PL = {};
+              }
+              var bssPlApiServer = "https://product-labels-pro.bsscommerce.com";
+              BSS_PL.customerTags = {% if customer %}'{%for tag in customer.tags%}{{ tag }},{% endfor %}'{% else %}'null'{% endif %};
+              BSS_PL.configData = [];
+              BSS_PL.storeId = 8458;
+              BSS_PL.currentPlan = "false";
+              </script>
+          <style>
+.homepage-slideshow .slick-slide .bss_pl_img {
+    visibility: hidden;
+}
+</style>

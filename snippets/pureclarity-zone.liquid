@@ -1,0 +1,25 @@
+{% comment %}
+/**
+ * PureClarity Zone snippet for Shopify stores.
+ *
+ * To use:
+ *
+ * Insert the following inside any .liquid file where you want to show a PureClarity Zone:
+ * {% include 'pureclarity-zone' with id:'<REFERENCE>' %}
+ *
+ * Where <REFERENCE> is the Id of the Zone you created in the PureClarity admin (ie. 'HOME-01' etc)
+
+ * For more details on PureClarity, please visit our website: www.pureclarity.com
+ *
+ * Copyright: (c) PureClarity. All rights reserved
+ */
+ {% endcomment %}
+
+{% if shop.metafields.pureclarity.isActive == 1 %}
+    {% capture _pc_sku %}{% if product %}sku:{{product.id}};{% endif %}{% endcapture %}
+    {% capture _pc_brand %}{% if product %}brand:{{product.vendor}};{% endif %}{% endcapture %}
+    {% capture _pc_collection %}{% if collection %}categoryid:{{collection.id}};{% endif %}{% endcapture %}
+
+    <div data-pureclarity="bmz:{{id}};{{_pc_sku}}{{_pc_brand}}{{_pc_collection}}"></div>
+
+{% endif %}

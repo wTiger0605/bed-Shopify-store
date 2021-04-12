@@ -1,0 +1,70 @@
+{% comment %}Check for related products and increase limit by one (to offset the currently selected product that is removed from the product loop){% endcomment %}
+{% if related_products == true %}
+  {% assign limit = limit | plus: 0 %}
+  {% assign loop_limit = limit | plus: 1 %}
+{% else %}
+  {% assign limit = limit | plus: 0 %}
+  {% assign loop_limit = limit | plus: 0 %}
+{% endif %}
+
+{% if per_slide != blank %}
+  {% assign visible_products = per_slide %}
+{% else %}
+  {% if section.settings.products_per != blank %}
+    {% assign visible_products = section.settings.products_per | plus: 0 %}
+  {% else %}
+    {% assign visible_products = block.settings.products_per | plus: 0 %}
+  {% endif %}
+{% endif %}
+
+
+{% if template contains 'product' %}
+  {% if limit <= visible_products %}
+    {% assign products_length = limit %}
+  {% else %}
+    {% assign products_length = products.length | minus: 1 %}
+  {% endif %}
+{% elsif featured_collection %}
+  {% assign products_length = collections[featured_collection].products.length %}
+{% else %}
+  {% assign products_length = products.length %}
+{% endif %}
+
+<div class="slider-gallery products-slider products-length-{{ products_length }} transparentBackground--{{settings.slideshow_button_style}}"
+      data-products-per-slide="{{ visible_products }}"
+      data-products-limit="{{ limit }}"
+      data-products-available="{{ products_length }}">
+  {% for product in products limit: loop_limit %}
+
+    {% if product.id != skip_product.id %}
+      {% assign feature_image = product.featured_image %}
+      <div class="gallery-cell thumbnail visible-{{ visible_products }}">
+        <div class="product-wrap">
+          <div class="relative product_image swap-{{ settings.collection_secondary_image }}">
+            <a href="{{ product.url | within: collection }}" itemprop="url">
+              <div class="image__container">
+                {% include 'image-element', image: feature_image, alt: product.title, object_fit: settings.align_height, max_height: settings.collection_height %}
+              </div>
+                {% if settings.collection_secondary_image != blank %}
+                  {% if product.images[1] != blank %}
+                    {% assign secondary_image = product.images[1] %}
+                  {% else %}
+                    {% assign secondary_image = product.featured_image %}
+                  {% endif %}
+                  <img  src="{{ secondary_image | img_url: '800x' }}"
+                        class="secondary lazyload"
+                        alt="{{ product.title | escape }}"
+                        />
+                {% endif %}
+              </a>
+            {% include "product-details" %}
+          </div>
+          <a class="product-info__caption {% if settings.thumbnail_hover_enabled %}hidden{% endif %}" href="{{ product.url | within: collection }}" itemprop="url">
+            {% include "product-info" %}
+          </a>
+        </div>
+        {% include 'collection-swatch' %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

@@ -1,0 +1,25 @@
+{% capture title %}{{ product.title }}{% endcapture %}
+{% capture price %}{{ product.price }}{% endcapture %}
+{% capture compare_at_price %}{{ product.compare_at_price }}{% endcapture %}
+{% capture featured_image %}{{ product.featured_image.src | img_url: '100x100'  }}{% endcapture %}
+{% capture selectParent %}{% for variant in product.variants %}<option value="{{ variant.title }}" title="{{ variant.title }}" data-id="{{ product.id }}" data-price="{{ variant.price }}" data-sku="{{ variant.sku }}" data-available="{{ variant.available }}" data-barcode="{{ variant.barcode }}" data-featuredimage="{{ variant.featured_image }}" data-inventorymanagement="{{ variant.inventory_management }}" data-compareatprice="{{ variant.compare_at_price }}" data-variantid="{{ variant.id }}">{{ variant.title }}</option>{% endfor %}{% endcapture %}
+{% capture selectVariant %}{% for variant in product.variants %}<li data-id="{{ product.id }}" data-vid="{{ variant.id }}"><span>{{ variant.title }}</span></li>{% endfor %}{% endcapture %}
+{% assign filterText1 = '' %}
+{% assign filterText2 = '' %}
+{% assign filterText3 = '' %}
+{% capture selectParent %}<select class="hs-option-parent-{{ product.id }} hs-select-option-add-to-cart" name="none" data-id="{{ product.id }}" style="display:none;">{{ selectParent }}</select>{% endcapture %}
+{% capture selectVariant %}<ul class="hs-combobox-option-variant hs-combobox-option-variant-{{ product.id }}">{{ selectVariant }}</ul>{% endcapture %}
+{% capture quantity %}<input type="number" class="hs-quick-button-quantity" name="hs-quick-button-quantity" value="1" min="1">{% endcapture %}
+{% capture button %}<button type="button" class="hs-add-to-cart hs-button-cart-{{ product.id }} hs-animated bounceIn" data-id="{{ product.id }}"><span><i class="fa fa-cart-plus"></i></span></button>{% endcapture %}
+{% capture flag %}<div class="hs-flag-content hs-flag-{{ product.id }}" style="display:none;"></div>{% endcapture %}
+{% if compare_at_price > price %}
+  {% capture compare_price_active %} hs-compare-price-active{% endcapture %}
+  {% capture compare_at_price %}{{ compare_at_price }}{% endcapture %}
+  {% capture content_compare_at_price %}<div class="hs-checkout-bar-compare-at-price"><s class="hs-money-compare-price">{{ compare_at_price | money }}</s></div>{% endcapture %}
+{% endif %}
+{% capture hs_price %}<div class="hs-checkout-bar-price"><span class="hs-money-price{{ compare_price_active }}">{{ price | money }}</span></div>{% endcapture %}
+{% if featured_image == blank or featured_image == nil %}
+{% capture featured_image %}https://cdn.shopify.com/s/files/1/0251/1021/6792/t/12/assets/hs-no-image_thumb.gif{% endcapture %}
+{% endif %}
+{% capture content %}<div class="hs-change-select-option" style="display:none;">{{ filterText1 }}{{ filterText2 }}{{ filterText3 }}</div>{{ selectParent }}{% endcapture %}
+<div class="hs-product-cart-drawer-{{ product.id }} hs-content-cart-drawer-loop hs-hidden-quick-buy-button" style="display:none;"><div class="hs-quantity-content-arrows hs-top-right">{{ content }}{{ quantity }}{{ button }}</div>{{ flag }}{{ selectVariant }}</div>

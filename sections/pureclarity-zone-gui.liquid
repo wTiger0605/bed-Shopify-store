@@ -1,0 +1,27 @@
+{% include 'pureclarity-zone' with id: section.settings.zone-reference %}
+
+{% schema %}
+  {
+    "name": "PureClarity Zone",
+    "settings": [
+		{
+        	"id": "zone-reference",
+        	"type": "text",
+        	"label": "Reference ID",
+        	"default": "Add your reference ID here"
+      	}
+	],
+ 	"presets": [
+    	{
+      		"name": "PureClarity Zone",
+      		"category": "PureClarity"
+    	}
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

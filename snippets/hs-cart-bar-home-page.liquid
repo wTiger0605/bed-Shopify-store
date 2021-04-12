@@ -1,0 +1,4 @@
+<script>
+{% capture hs_home_page_products %}{% assign hs_all_home_page_products =  | split: "|" %}[{% for hs_s_h_prod in hs_all_home_page_products %}{% if all_products[hs_s_h_prod].error %}{% else %}{{ all_products[hs_s_h_prod] | json }}{% if forloop.last == true %}{% else %},{% endif %}{% endif %}{% endfor %}]{% endcapture %}
+window.HSSLIDECART.cart_bar_home_page = { json:{{ hs_home_page_products }} }
+</script>

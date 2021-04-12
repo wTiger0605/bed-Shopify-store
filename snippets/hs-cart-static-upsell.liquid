@@ -1,0 +1,8 @@
+<script>
+window.HSSLIDECART = window.HSSLIDECART || {};
+window.HSSLIDECART = window.HSSLIDECART || {};
+window.HSSLIDECART.shop_url = "{{ shop.permanent_domain }}";
+window.HSSLIDECART.apk = "{{ shop.permanent_domain | md5 }}";
+{% capture hs_static_products %}{% assign hs_all_products =  | split: "|" %}[{% for hs_s_prod in hs_all_products %}{% if all_products[hs_s_prod].error %}{% else %}{{ all_products[hs_s_prod] | json }}{% if forloop.last == true %}{% else %},{% endif %}{% endif %}{% endfor %}]{% endcapture %}
+window.HSSLIDECART.upsell = { json:{{ hs_static_products }} }
+</script>

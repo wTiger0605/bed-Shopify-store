@@ -1,0 +1,160 @@
+{% if product.available %}
+
+  {% if section.settings.show_payment_button %}
+    {% assign show_payment_button = true %}
+  {% elsif show_payment_button_quickshop %}
+    {% assign show_payment_button = true %}
+  {% else %}
+    {% assign show_payment_button = false %}
+  {% endif %}
+
+  {% assign variant = product.selected_or_first_available_variant %}
+
+  <div class="clearfix product_form init smart-payment-button--{{ show_payment_button }} {% if product.variants.size > 1 or product.options.size > 1 %}product_form_options{% endif %} product_form--{{ settings.product_form_style }}"
+        id="product-form-{{ product.id }}"
+        data-money-format="{{ shop.money_format }}"
+        data-shop-currency="{{ shop.currency }}"
+        data-select-id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}"
+        data-enable-state="{% if template contains 'product' %}true{% else %}false{% endif %}"
+        data-product="{{ product | json | escape }}"
+        {% if settings.limit_quantity or settings.display_inventory_left %}
+          data-variant-inventory='[{%- for v in product.variants -%}{"id":{{v.id}},"inventory_quantity":{{v.inventory_quantity}},"inventory_management":"{{v.inventory_management}}","inventory_policy":"{{v.inventory_policy}}"}{% if forloop.last == false %},{% endif %}{%- endfor -%}]'
+        {% endif %}
+        data-product-id="{{ product.id }}"
+        >
+
+
+
+    {% form 'product', product %}
+
+    {% if settings.product_form_style == "swatches" and product.variants.size > 1 or settings.product_form_style == "swatches" and product.options[0] != "Title" %}
+      <div class="swatch_options">
+        {% for option in product.options %}
+          {% include 'product-swatch' with option %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if product.options.size > 1 %}
+      <div class="select">
+        <select id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}" name="id" class="multi_select">
+          {% for v in product.variants %}
+            <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-sku="{{ v.sku }}">{{ v.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% elsif product.options.size == 1 and product.variants.size > 1 or product.options.size == 1 and product.options[0] != "Title" %}
+      <div class="select">
+        <label>{{ product.options[0] }}</label>
+        <select id="product-select-{{ product.id }}{{ product-form }}{{ section.id }}{{ block.id }}" name="id">
+          {% for v in product.variants %}
+            <option {% if v == variant %}selected="selected"{% endif %} value="{{ v.id }}" data-sku="{{ v.sku }}">{{ v.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    {% else %}
+      <input type="hidden" name="id" value="{{ variant.id }}" />
+    {% endif %}
+ 
+    {% if settings.display_inventory_left %}
+      <div class="items_left">
+        {% if variant.inventory_management != blank and variant.inventory_quantity > 0 %}
+          {% capture items_left_text %}
+            {% if variant.inventory_quantity == 1 %}
+              {{ 'products.product.items_left_count.one' | t }}
+            {% else %}
+              {{ 'products.product.items_left_count.other' | t }}
+            {% endif %}
+          {% endcapture %}
+          {% if variant.inventory_quantity <= settings.inventory_threshold %}
+            {{ variant.inventory_quantity }} {{ items_left_text }}
+          {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% comment %}<div id="infiniteoptions-container"></div>{% endcomment %}
+    <span class="mw-product-options"></span>
+     
+    <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+      <meta itemprop="seller" content="{{ shop.name | escape }}" />
+      <link itemprop="availability" href="http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}">
+      <meta itemprop="itemCondition" itemtype="http://schema.org/OfferItemCondition" content="http://schema.org/NewCondition"/>
+
+      <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+      <span itemprop="price" content="{{ variant.price | money_without_currency | remove: "," }}" class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+        <span class="current_price {% if product.available == false %}hidden{% endif %}">
+          {% if variant.price > 0 %}
+            <span class="money">{{ variant.price | money }}</span>
+          {% else %}
+            {{ settings.free_price_text }}
+          {% endif %}
+        </span>
+      </span>
+      <span class="was_price">
+        {% if variant.price < variant.compare_at_price and variant.available %}
+          <span class="money">{{ variant.compare_at_price | money }}</span>
+        {% endif %}
+      </span>
+
+      {% if section.settings.display_savings %}
+        <span class="sale savings">
+          {% if variant.price < variant.compare_at_price and variant.available %}
+            {{ 'products.product.savings' | t }}  <span class="money">{{ variant.compare_at_price | minus: variant.price | money }}</span>
+          {% endif %}
+        </span>
+      {% endif %}
+    </p>
+
+    <!-- Placement v2 -->
+    <klarna-placement
+      class="klarna-placement-credit-c"
+      data-key="credit-promotion-badge"
+      data-locale="en-GB"
+      data-purchase-amount="{{ variant.price }}"
+    ></klarna-placement>
+    <klarna-instant-shopping data-instance-id="button-123abc456" /></klarna-instant-shopping>
+    <!-- end Placement -->
+
+    <div class="purchase-details">
+      {% if settings.display_product_quantity %}
+        <div class="purchase-details__quantity product-quantity-box">
+          {% comment %}<label for="quantity">{{ 'products.product.quantity' | t }}</label>{% endcomment %}
+          <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
+          <input type="number" min="1" size="2" class="quantity" name="quantity" id="quantity" value="1" {% if settings.limit_quantity and variant.inventory_management != blank and variant.inventory_policy == "deny" %}max="{{ variant.inventory_quantity }}"{% endif %} />
+          <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+        </div>
+      {% endif %}
+      <div class="purchase-details__buttons purchase-details__spb--{{ show_payment_button }}">
+        {% if settings.cart_action == 'reload_page' %}
+          <input type="hidden" name="return_to" value="back" />
+        {% elsif settings.cart_action == 'redirect_checkout' %}
+          <input type="hidden" name="return_to" value="/checkout" />
+        {% endif %}
+
+        {% capture add_to_cart_label %}{% if collection_handles contains 'pre-order' %}{{ 'collections.general.pre_order' | t }}{% else %}{{ 'products.product.add_to_cart' | t }}{% endif %}{% endcapture %}
+        <button id="AddToCart" type="submit" name="add" class="action_button add_to_cart {% if show_payment_button %} action_button--secondary {% endif %}" data-label={{ add_to_cart_label | json }}>
+          <span class="text">{{ add_to_cart_label }}</span>
+          <svg x="0px" y="0px" width="32px" height="32px" viewBox="0 0 32 32" class="checkmark">
+            <path fill="none" stroke-width="2" stroke-linecap="square" stroke-miterlimit="10" d="M9,17l3.9,3.9c0.1,0.1,0.2,0.1,0.3,0L23,11"/>
+          </svg>
+        </button>
+        {% if show_payment_button %}
+          {{ form | payment_button }}
+        {% endif %}
+      </div>
+      
+      {% comment %}
+      <a class="klarn" href="/pages/klarna">
+        <div class="klarn_container">
+          <span class="text_box">Buy now, pay later. <b>Learn more</b></span>
+          <span class="klarn_img"><img src="https://cdn.shopify.com/s/files/1/0509/7819/3567/files/klarna_logo_1.png?v=1609240007"></span>
+        </div>
+      </a>
+      {% endcomment %}
+      
+    </div>
+  {% endform %}
+</div>
+{% endif %}

@@ -1,0 +1,50 @@
+{% comment %}
+/**
+ * PureClarity snippet for Shopify stores.
+ *
+ * To install:
+ *
+ * Insert the following line on the first line INSIDE the body tag in your theme.liquid file:
+ * {% include 'pureclarity' %}
+ *
+ *
+ * For more details on PureClarity, please visit our website: www.pureclarity.com
+ *
+ * Copyright: (c) PureClarity. All rights reserved
+ */
+ {% endcomment %}
+
+<script type="text/javascript">
+
+
+  window.pureclarityConfig = {
+    isActive: {{ shop.metafields.pureclarity.isActive | t | json }},
+    merchandisingActive: {{ shop.metafields.pureclarity.merchandisingEnabled | t | json }},
+    searchActive: {{ shop.metafields.pureclarity.searchEnabled | t | json }},
+    productListingActive: {{ shop.metafields.pureclarity.productListingEnabled | t | json }},
+    appUrl: '{{ shop.metafields.pureclarity.appUrl }}',
+    searchDomSelector: '{{ shop.metafields.pureclarity.searchDomSelector }}',
+    productListingDomSelector: '{{ shop.metafields.pureclarity.productListingDomSelector }}',
+    product: {{ product | t | json }},
+    customer: {{ customer.id | t | json }},
+    cart: {{ cart | t | json }},
+    currency: '{{shop.currency}}',
+    pageType: '{{ request.page_type }}'
+  };
+
+  if (window.pureclarityConfig.isActive){
+    pureclarityConfig.isSearch = window.pureclarityConfig.searchActive && ({{search.performed | t | json}} != null);
+    pureclarityConfig.isProductListing = window.pureclarityConfig.productListingActive && ({{collection.id| t | json}} != null);
+
+    if (pureclarityConfig.isSearch){
+      document.write('<style>' + pureclarityConfig.searchDomSelector + ' { display: none }</style>');
+      pureclarityConfig.navigationValue = "navigation_search";
+    }else if (pureclarityConfig.isProductListing){
+      document.write('<style>' + pureclarityConfig.productListingDomSelector + ' { display: none }</style>');
+      pureclarityConfig.navigationValue = "navigation_category:" + {{collection.id| t | json}};
+    }
+  }
+</script>
+<script type="text/javascript" src="https://s3-eu-west-1.amazonaws.com/pureclarity-shopify/assets/js/shopify_pc.js" defer="defer"></script>
+
+
