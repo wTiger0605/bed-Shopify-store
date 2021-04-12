@@ -1,0 +1,1 @@
+# bed-Shopify-store
