@@ -1532,13 +1532,13 @@ var header = {
           closeMiniCart();
           $('body').removeClass('blocked-scroll');
         } else {
-          openMiniCart($cart_container);
-          $('body').addClass('blocked-scroll');
+          // openMiniCart($cart_container);
+          // $('body').addClass('blocked-scroll');
         }
 
-        if (is_touch_device() || $(window).width() <= 798) {
-          e.preventDefault();
-        }
+        // if (is_touch_device() || $(window).width() <= 798) {
+        //   e.preventDefault();
+        // }
       });
 
       $('.cart_content__continue-shopping').on('click', function(e){
@@ -1547,21 +1547,21 @@ var header = {
 
     } else {
 
-      $(".nav a, .logo a").not(".cart_content a").on("mouseenter", function() {
-        if(!$(this).hasClass("active_link")) {
-          $('.dropdown_container').hide();
-          $('.active_link').removeClass('active_link');
-          $('.is-absolute').parent().addClass('feature_image');
-        }
-      });
+      // $(".nav a, .logo a").not(".cart_content a").on("mouseenter", function() {
+      //   if(!$(this).hasClass("active_link")) {
+      //     $('.dropdown_container').hide();
+      //     $('.active_link').removeClass('active_link');
+      //     $('.is-absolute').parent().addClass('feature_image');
+      //   }
+      // });
 
-      $('.main_nav, .top_bar, .cart_container').on("mouseleave", function() {
-        if ( $(window).width() > 798) {
-          $('.dropdown_container').hide();
-        }
-        $('.active_link').removeClass('active_link');
-        $('.is-absolute').parent().addClass('feature_image');
-      });
+      // $('.main_nav, .top_bar, .cart_container').on("mouseleave", function() {
+      //   if ( $(window).width() > 798) {
+      //     $('.dropdown_container').hide();
+      //   }
+      //   $('.active_link').removeClass('active_link');
+      //   $('.is-absolute').parent().addClass('feature_image');
+      // });
 
       $('.dropdown_link, .dropdown_link--vertical').attr('data-click-count', 0);
 
