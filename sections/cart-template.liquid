@@ -26,81 +26,88 @@
   {% else %}
   
     <form action="/cart" method="post" id="cart_form">
-      <div class="section clearfix">
-        <div class="eleven columns medium-down--one-whole">
-          {% assign total_saving = 0 %}
-          {% for item in cart.items %}
-            {% if item.variant.compare_at_price > item.variant.price %}
-              {% assign saving = item.variant.compare_at_price | minus: item.variant.price | times: item.quantity %}
-              {% assign total_saving = saving | plus: total_saving %}
-            {% endif %}
-  
-            <div class="section clearfix {% include 'mw_PO_cart', code: 'class' %}" {% include 'mw_PO_cart' with item, code: 'style' %}>
-              {% include 'mw_PO_cart' with item, code: 'relation' %}
-              <div class="five columns alpha">
-                <a href="{{ item.url }}" title="{{ item.title | escape }}" class="cart_page_image">
-                  {% include 'image-element', image: item, alt: item.title, object_fit: settings.align_height, max_height: settings.collection_height %}
-                </a>
-              </div>
-  
-              <div class="eleven columns omega cart_content_info">
-                <h3>
-                  <a href="{{ item.url }}">{{ item.product.title }}</a>
-                </h3>
-  
-                {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
-                  <p class="meta">
-                    {% for option in item.product.options %}
-                      <span class="label">{{ option }}:</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />
-                    {% endfor %}
-                  </p>
-                {% endunless %}
-  
-                {% comment %}
-                {% if item.properties %}
-                  <p>
-                    {% for p in item.properties %}
-                      {% unless p.last == blank %}
-                        {% if p.last contains '/uploads/' %}
-                          <div>
-                            {{ p.first }}: <a class="lightbox" href="{{ p.last }}">{{ 'cart.general.uploaded_file' | t }}</a>
-                          </div>
-                        {% else %}
-                          <div>
-                            {{ p.first }}: {{ p.last }}
-                          </div>
-                        {% endif %}
-                      {% endunless %}
-                    {% endfor %}
-                  </p>
-                {% endif %}
-              	{% endcomment %}
-              {% include 'mw_PO_cart' with item, code: 'properties' %}
-  
-                <p class="modal_price">
-                  {% if item.price > 0 %}
-                    {% comment %}<span class="money" >{{ item.price | money }}</span>{% endcomment %}
-                  	<span class="money" >{% include 'mw_PO_cart' with item, code: 'price' %}</span>
-                  {% else %}
-                    {{ settings.free_price_text }}
+      <div class="section clearfix cart-container-c">
+        <div class="columns medium-down--one-whole">
+          <table class="cart-table-c">
+            <thead>
+              <tr>
+                <th colspan="2" class="no-pad-left">Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th class="no-pad-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% assign total_saving = 0 %}
+              {% for item in cart.items %}
+                <tr class="{% include 'mw_PO_cart', code: 'class' %}" {% include 'mw_PO_cart' with item, code: 'style' %}>
+                  {% if item.variant.compare_at_price > item.variant.price %}
+                    {% assign saving = item.variant.compare_at_price | minus: item.variant.price | times: item.quantity %}
+                    {% assign total_saving = saving | plus: total_saving %}
                   {% endif %}
-  
-                  {% if item.price < item.variant.compare_at_price %}
-                    <span class="money was_price">{{ item.variant.compare_at_price | money }}</span>
-                  {% endif %}
-                </p>
-  
-                <div class="product-quantity-box left">
-                  <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
-                  <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
-                  <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
+                  {% include 'mw_PO_cart' with item, code: 'relation' %}
+                  <td>
+                    <a href="{{ item.url }}" title="{{ item.title | escape }}" class="cart_page_image">
+                      {% include 'image-element', image: item, alt: item.title, object_fit: settings.align_height, max_height: settings.collection_height %}
+                    </a>
+                  </td>
+                  <td>
+                    <h3>
+                      <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    </h3>
+      
+                    {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
+                      <p class="meta">
+                        {% for option in item.product.options %}
+                          <span class="label">{{ option }}:</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />
+                        {% endfor %}
+                      </p>
+                    {% endunless %}
+
+                    {% include 'mw_PO_cart' with item, code: 'properties' %}
+                  </td>
+                  <td>
+                    <p class="modal_price">
+                      {% if item.price > 0 %}
+                        {% comment %}<span class="money" >{{ item.price | money }}</span>{% endcomment %}
+                        <span class="money" >{% include 'mw_PO_cart' with item, code: 'price' %}</span>
+                      {% else %}
+                        {{ settings.free_price_text }}
+                      {% endif %}
+      
+                      {% if item.price < item.variant.compare_at_price %}
+                        <span class="money was_price">{{ item.variant.compare_at_price | money }}</span>
+                      {% endif %}
+                    </p>
+                  </td>
+                  <td>
+                    <div class="product-quantity-box left">
+                      <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
+                      <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
+                      <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="modal_price">
+                      {% if item.price > 0 %}
+                        {% comment %}<span class="money" >{{ item.price | money }}</span>{% endcomment %}
+                        <span class="money" >{% include 'mw_PO_cart' with item, code: 'price' %}</span>
+                      {% else %}
+                        {{ settings.free_price_text }}
+                      {% endif %}
+      
+                      {% if item.price < item.variant.compare_at_price %}
+                        <span class="money was_price">{{ item.variant.compare_at_price | money }}</span>
+                      {% endif %}
+                    </p>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
   
-        <div class="five columns medium-down--one-whole">
+        <div class="columns medium-down--one-whole">
           <div class="section clearfix">
             <div class="subtotal">
               <p class="cart_subtotal js-cart_subtotal">

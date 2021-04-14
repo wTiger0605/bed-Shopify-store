@@ -801,7 +801,7 @@ var cart = {
         }
       });
     }
-
+ 
     //Refresh page on add to cart if on cart page
     if($('body').hasClass('cart')) {
       $('.product_form form').on("submit", function(){
@@ -3439,7 +3439,7 @@ $(function() {
       e.preventDefault();
       var $addToCartForm = $(this);
       var $addToCartBtn = $addToCartForm.find('.add_to_cart');
-
+      console.log('Clicked add cart button');
       $.ajax({
         url: '/cart/add.js',
         dataType: 'json',
@@ -3464,6 +3464,8 @@ $(function() {
             dataType: "json",
             cache: false,
             success: function(cart) {
+              //add to cart button click I think.
+              document.location.href = "/cart";
               refreshCart(cart);
               if($('html').hasClass("remodal-is-locked")) {
                 $('.remodal-close').click();
@@ -4194,7 +4196,7 @@ $(document).ready(function() {
     //   placementKey: 'credit-promotion-standard'
     // })
   // })
-  
+
   checkContainer();
 });
 
