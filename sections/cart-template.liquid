@@ -46,20 +46,20 @@
                     {% assign total_saving = saving | plus: total_saving %}
                   {% endif %}
                   {% include 'mw_PO_cart' with item, code: 'relation' %}
-                  <td>
+                  <td class="cart-table__image no-pad-left">
                     <a href="{{ item.url }}" title="{{ item.title | escape }}" class="cart_page_image">
                       {% include 'image-element', image: item, alt: item.title, object_fit: settings.align_height, max_height: settings.collection_height %}
                     </a>
                   </td>
-                  <td>
-                    <h3>
+                  <td class="cart-item-info-c">
+                    <p>
                       <a href="{{ item.url }}">{{ item.product.title }}</a>
-                    </h3>
+                    </p>
       
                     {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
                       <p class="meta">
                         {% for option in item.product.options %}
-                          <span class="label">{{ option }}:</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />
+                          <span class="label option-cart-title">{{ option }}:</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />
                         {% endfor %}
                       </p>
                     {% endunless %}
@@ -87,7 +87,7 @@
                       <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
                     </div>
                   </td>
-                  <td>
+                  <td class="no-pad-right">
                     <p class="modal_price">
                       {% if item.price > 0 %}
                         {% comment %}<span class="money" >{{ item.price | money }}</span>{% endcomment %}
@@ -109,78 +109,84 @@
   
         <div class="columns medium-down--one-whole">
           <div class="section clearfix">
-            <div class="subtotal">
-              <p class="cart_subtotal js-cart_subtotal">
-                <span class="right">
-                  <span class="money" >{{ cart.total_price | money }}</span>
-                  {% comment %}
-                  <span class="money">
-                    <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
-                      {{ cart.total_price | money }}
+            <div class="cart-option-c">
+              <div class="cart-option-half-c">
+                {% if cart.item_count > 0 %}
+                  <div class="featured-links">
+                    <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="secondary_button">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
+                  </div>
+                {% endif %}
+
+                {% if section.settings.display_special_instructions %}
+                  <label for="note">{{ 'cart.general.note' | t: shop_name: shop.name }}:</label>
+                  <textarea id="note" name="note" rows="2">{{ cart.note }}</textarea>
+                {% endif %}
+              </div>
+              <div class="cart-option-half-c">
+                <p class="cart_subtotal js-cart_subtotal">
+                  <span class="right">
+                    <span class="money" >{{ cart.total_price | money }}</span>
+                    {% comment %}
+                    <span class="money">
+                      <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
+                        {{ cart.total_price | money }}
+                      </span>
                     </span>
+                    {% endcomment %}
                   </span>
-                  {% endcomment %}
-                </span>
-                <span>{{ 'cart.general.subtotal' | t }}</span>
-              </p>
-  
-              {% if section.settings.display_savings %}
-                <p class="cart_savings sale">
-                  {% if total_saving > 0 %}
-                    <span class="right">
-                      <span class="money">{{ total_saving | money }}</span>
-                    </span>
-                    <span>{{ 'layout.general.savings' | t }}</span>
-                  {% endif %}
+                  <span>{{ 'cart.general.subtotal' | t }}</span>
                 </p>
-              {% endif %}
-  
-              {% if settings.show_multiple_currencies %}
+    
+                {% if section.settings.display_savings %}
+                  <p class="cart_savings sale">
+                    {% if total_saving > 0 %}
+                      <span class="right">
+                        <span class="money">{{ total_saving | money }}</span>
+                      </span>
+                      <span>{{ 'layout.general.savings' | t }}</span>
+                    {% endif %}
+                  </p>
+                {% endif %}
+    
+                {% if settings.show_multiple_currencies %}
+                  <p>
+                    <small>
+                      {{ 'cart.general.orders_processed_in_currency_html' | t: currency: shop.currency }}
+                    </small>
+                  </p>
+                {% endif %}
+    
+                {% if section.settings.display_tos_checkbox %}
+                  <p>
+                    <input type="checkbox" class="tos_agree" id="cart_agree" required />
+                      <label class="tos_label" for="cart_agree">
+                        {{ 'cart.general.agree_to_terms_html' | t }}
+                      </label>
+                    {% if settings.tos_page != blank %}
+                      <a href="{{ pages[settings.tos_page].url }}" target="_blank" class="tos_icon">{{ 'cart.general.view_terms' | t }}</a>
+                    {% endif %}
+                  </p>
+                {% endif %}
+    
+                {% if section.settings.cart_message != blank %}
+                  <div>
+                    {{ section.settings.cart_message }}
+                  </div>
+                {% endif %}
+    
                 <p>
-                  <small>
-                    {{ 'cart.general.orders_processed_in_currency_html' | t: currency: shop.currency }}
-                  </small>
+                  <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}{{ 'cart.general.checkout' | t }}</button>
                 </p>
-              {% endif %}
-  
-              {% if section.settings.display_special_instructions %}
-                <label for="note">{{ 'cart.general.note' | t: shop_name: shop.name }}:</label>
-                <textarea id="note" name="note" rows="2">{{ cart.note }}</textarea>
-              {% endif %}
-  
-              {% if section.settings.display_tos_checkbox %}
-                <p>
-                  <input type="checkbox" class="tos_agree" id="cart_agree" required />
-                    <label class="tos_label" for="cart_agree">
-                      {{ 'cart.general.agree_to_terms_html' | t }}
-                    </label>
-                  {% if settings.tos_page != blank %}
-                    <a href="{{ pages[settings.tos_page].url }}" target="_blank" class="tos_icon">{{ 'cart.general.view_terms' | t }}</a>
-                  {% endif %}
-                </p>
-              {% endif %}
-  
-              {% if section.settings.cart_message != blank %}
-                <div>
-                  {{ section.settings.cart_message }}
-                </div>
-              {% endif %}
-  
-              <p>
-                <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}{{ 'cart.general.checkout' | t }}</button>
-              </p>
-  
-              {% if content_for_additional_checkout_buttons %}
-                <div class="additional-checkout-buttons">
-                  {{ content_for_additional_checkout_buttons }}
-                </div>
-              {% endif %}
-  
-              {% if cart.item_count > 0 %}
-                <div class="featured-links">
-                  <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="secondary_button">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
-                </div>
-              {% endif %}
+    
+                {% comment %}
+                {% if content_for_additional_checkout_buttons %}
+                  <div class="additional-checkout-buttons">
+                    {{ content_for_additional_checkout_buttons }}
+                  </div>
+                {% endif %}
+                {% endcomment %}
+
+              </div>
             </div>
           </div>
         </div>
