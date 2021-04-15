@@ -2053,7 +2053,7 @@ a.mini_cart span,
   float: right;
   text-align: center;
   cursor: pointer;
-  background-color: {{ settings.top_bar_cart_bg_color }};
+  //background-color: {{ settings.top_bar_cart_bg_color }};
   padding-left: 5px;
   padding-right: 5px;
   margin-left: 5px;
@@ -10760,6 +10760,7 @@ $delay: 0;
           }
           p {
             font-size: 13px;
+            margin-bottom: 0;
           }
           a {
             margin-right: 0;
@@ -11777,14 +11778,14 @@ ul.tabs li.current{
             border-color: #BE3A4A;
           }
         }
-        br {
-          &:first-of-type {
-            display: none;
-          }
-          &:last-of-type {
-            display: none;
-          }
-        }
+        // br {
+        //   &:first-of-type {
+        //     display: none;
+        //   }
+        //   &:last-of-type {
+        //     display: none;
+        //   }
+        // }
       }
     }
   }
@@ -11801,26 +11802,46 @@ ul.tabs li.current{
         width: 100%;
         max-width: 100%;
       }
-      .action_button.add_to_cart {
-        background: #ea9635;
-        color: white;
-      }
-      .secondary_button {
-        background: white;
-        height: 44px;
-        padding: 13px 0;
-        border: 1px solid #ea9635;
-        line-height: 1.2;
-        font-weight: bold;
-        font-style: normal;
-        font-size: 14px;
-        text-transform: uppercase;
-        letter-spacing: 0px;
+      .action-buttons-wrapper-c {
+        display: flex;
+        p {
+          width: 100%;
+          margin-left: 5px;
+          margin-bottom: 0;
+          .action_button.add_to_cart {
+            background: #ea9635;
+            color: white;
+          }
+        }
+        .featured-links {
+          width: 100%;
+          margin-right: 5px;
+          .secondary_button {
+            background: white;
+            height: 44px;
+            margin: 0;
+            padding: 13px 0;
+            border: 1px solid #ea9635;
+            line-height: 1.2;
+            font-weight: bold;
+            font-style: normal;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0px;
+          }
+        }
       }
       .badgesContainer {
         display: flex;
         justify-content: center; 
       }
     }
+  }
+}
+.mw-edit-options-container form.mw-edit-options-form {
+  @media (max-width: 798px) {
+    max-width: calc(100% - 20px);
+    margin: 10% auto;
+    z-index: 99999;
   }
 }

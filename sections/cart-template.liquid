@@ -59,7 +59,8 @@
                     {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
                       <p class="meta">
                         {% for option in item.product.options %}
-                          <span class="label option-cart-title">{{ option }}:</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />
+                          {% comment %}<span class="label option-cart-title">{{ option }}:</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />{% endcomment %}
+                          <span class="label option-cart-title">{% if option contains "Color" %}Colour:{% else %}{{option}}{% endif %}</span> <span>{{ item.variant.options[forloop.index0] }}</span><br />
                         {% endfor %}
                       </p>
                     {% endunless %}
@@ -91,7 +92,7 @@
                     <p class="modal_price">
                       {% if item.price > 0 %}
                         {% comment %}<span class="money" >{{ item.price | money }}</span>{% endcomment %}
-                        <span class="money" >{% include 'mw_PO_cart' with item, code: 'price' %}</span>
+                        <span class="money" >{% include 'mw_PO_cart' with item, code: 'line_price' %}</span>
                       {% else %}
                         {{ settings.free_price_text }}
                       {% endif %}
@@ -111,12 +112,6 @@
           <div class="section clearfix">
             <div class="cart-option-c">
               <div class="cart-option-half-c">
-                {% if cart.item_count > 0 %}
-                  <div class="featured-links">
-                    <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="secondary_button">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
-                  </div>
-                {% endif %}
-
                 {% if section.settings.display_special_instructions %}
                   <label for="note">{{ 'cart.general.note' | t: shop_name: shop.name }}:</label>
                   <textarea id="note" name="note" rows="2">{{ cart.note }}</textarea>
@@ -173,10 +168,17 @@
                     {{ section.settings.cart_message }}
                   </div>
                 {% endif %}
-    
-                <p>
-                  <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}{{ 'cart.general.checkout' | t }}</button>
-                </p>
+
+                <div class="action-buttons-wrapper-c">
+                  {% if cart.item_count > 0 %}
+                    <div class="featured-links">
+                      <a href="{% if cart.items.first.product.collections != blank %}{{ cart.items.first.product.collections.last.url }}{% else %}/collections/all{% endif %}" class="secondary_button">{{ 'cart.general.continue_shopping_link_html' | t }}</a>
+                    </div>
+                  {% endif %}
+                  <p>
+                    <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}{{ 'cart.general.checkout' | t }}</button>
+                  </p>
+                </div>
     
                 {% comment %}
                 {% if content_for_additional_checkout_buttons %}

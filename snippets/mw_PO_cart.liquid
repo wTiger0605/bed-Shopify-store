@@ -8,7 +8,6 @@
 		{% if propertySize > 0 and mw_PO_cart.product.type != 'mw_product_option' %}
     		{% for p in mw_PO_cart.properties %}
         		{% unless p.last == blank %}
-        			<br>
         			{% if p.first contains '_mw_option_relation' %}{% continue %}{% endif; %}
         			{% if p.first contains '_replaced_image' %}{% continue %}{% endif; %}
                     {% comment %} add BOLD properties {% endcomment %}
@@ -21,8 +20,9 @@
             			<span class="option-cart-title-content">{% for prop in p.last %}{{ prop }}{% if forloop.last == false %}, {% endif %}{% endfor %}</span>
         			{% endif %}
         		{% endunless %}
+				<br>
     		{% endfor %}
-        	<br>
+			<br>
           <span class="mw-configure-link-container"></span>
 		{% endif %}
     {% when 'price' %}
