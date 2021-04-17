@@ -5227,9 +5227,9 @@
     "minicart_bg_color": "#ffffff",
     "banner_placeholder_background_color": "#ecf0f3",
     "banner_background_color": "#212c35",
-    "header_bg_color": "#06324b",
+    "header_bg_color": "#14324a",
     "header_background": true,
-    "transparent_header": true,
+    "transparent_header": false,
     "promo_bg_color": "#4e4e4e",
     "shop_home_page_content_bg_color": "#e1e6ea",
     "featured_links_background": "#d2d9df",
@@ -5773,6 +5773,7 @@
               "text": "<p>By expert Couriers<\/p>",
               "align_text": "left",
               "button_label": "",
+              "button_link": "shopify:\/\/policies\/shipping-policy",
               "border_style": "none"
             }
           },
@@ -5783,9 +5784,10 @@
               "image": "shopify:\/\/shop_images\/ksu9xTZM_300x_410e5c6d-6145-4cc9-86e2-d9f57048889a.png",
               "title": "Klarna",
               "heading_size": "regular_text",
-              "text": "<p>Buy now pay later<\/p>",
+              "text": "<p>0% Finance<\/p>",
               "align_text": "left",
               "button_label": "",
+              "button_link": "shopify:\/\/pages\/klarna",
               "border_style": "none"
             }
           },
@@ -5875,7 +5877,7 @@
               "image": "shopify:\/\/shop_images\/Free_Delivery_4cbda7c6-80f6-4c3b-bc50-3cae2aa792ff.jpg",
               "title": "Fast FREE Delivery",
               "heading_size": "regular_text",
-              "text": "<p>&amp; Hassle free returns<\/p>",
+              "text": "<p><a href=\"\/policies\/refund-policy\" title=\"Refund Policy\">&amp; Hassle free returns<\/a><\/p>",
               "align_text": "left",
               "button_label": "",
               "border_style": "none"
@@ -5888,7 +5890,7 @@
               "image": "shopify:\/\/shop_images\/Klarna_2.jpg",
               "title": "Klarna",
               "heading_size": "regular_text",
-              "text": "<p>Buy now pay later<\/p>",
+              "text": "<p><a href=\"\/pages\/klarna\" title=\"Klarna\">0% Finance<\/a><\/p>",
               "align_text": "left",
               "button_label": "",
               "border_style": "none"
@@ -5901,7 +5903,7 @@
               "image": "shopify:\/\/shop_images\/Made_in_the_UK.jpg",
               "title": "Made in the UK",
               "heading_size": "regular_text",
-              "text": "<p>Made with love<\/p>",
+              "text": "<p><a href=\"\/pages\/about-us\" title=\"About us\">Made with love<\/a><\/p>",
               "align_text": "left",
               "button_label": "",
               "border_style": "none"
@@ -5914,7 +5916,7 @@
               "image": "shopify:\/\/shop_images\/5_Star_d231cd93-c4cb-4a72-939f-555817bc7d3f.jpg",
               "title": "Love Our Beds",
               "heading_size": "regular_text",
-              "text": "<p>5* Trustpilot reviews<\/p>",
+              "text": "<p><a href=\"https:\/\/uk.trustpilot.com\/review\/sonno.co.uk\" target=\"_blank\" title=\"https:\/\/uk.trustpilot.com\/review\/sonno.co.uk\">5* Trustpilot reviews<\/a><\/p>",
               "align_text": "left",
               "button_label": "",
               "border_style": "none"
@@ -6286,6 +6288,15 @@
           "1108a88a-be34-4d35-b529-05708b54b835"
         ],
         "settings": {}
+      },
+      "cart-template": {
+        "type": "cart-template",
+        "settings": {
+          "display_special_instructions": true,
+          "display_tos_checkbox": false,
+          "display_savings": true,
+          "cart_message": ""
+        }
       }
     },
     "content_for_index": [
