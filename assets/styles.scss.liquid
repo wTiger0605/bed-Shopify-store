@@ -1547,6 +1547,7 @@ body.is-active {
         @include flexbox();
         @include align-items(center);
         z-index: 1;
+        background: #004973;
       }
     }
     > a, > a:visited, > a:active {
@@ -1668,7 +1669,7 @@ body.is-active {
 /*  Mobile nav  */
 
 #header .mobile_nav.dropdown_link {
-  width: 25%;
+  width: 84px;
   span.menu_title {
     position: absolute;
     left: 40px;
@@ -1796,6 +1797,10 @@ body.is-active {
     @include align-items(center);
     margin-left: auto;
     height: 40px;
+    .icon-phone {
+      padding-right: 14px;
+      font-weight: bold;
+    }
     .icon-search {
       display: inline-block;
       line-height: 0;
