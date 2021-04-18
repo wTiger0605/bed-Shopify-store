@@ -332,14 +332,16 @@
               {{ menu_right }}
             </ul>
           </div>
-          <ul class="header-phone-c">
-            <li><i class="fa fa-mobile" aria-hidden="true"></i><a href="tel:{{ section.settings.phone_link | replace: ' ', '' | replace: '+', '' | replace: '-', '' }}">{{ section.settings.phone_number }}</a></li>
-            <li><p>{{section.settings.phone_time}}</p></li>
-          </ul>
           <ul class="header-icons-c">
-            <li>
-              <a href="/account" class="icon-user" title="{{ 'layout.customer.my_account' | t }} {% if customer %}({{ customer.email }}){% endif %}"> </a>
-            </li>
+            <ul class="header-phone-c">
+              <li><i class="fa fa-mobile" aria-hidden="true"></i><a href="tel:{{ section.settings.phone_link | replace: ' ', '' | replace: '+', '' | replace: '-', '' }}">{{ section.settings.phone_number }}</a></li>
+              <li><p>{{section.settings.phone_time}}</p></li>
+            </ul>
+            {% if shop.customer_accounts_enabled %}
+              <li>
+                <a href="/account" class="icon-user" title="{{ 'layout.customer.my_account' | t }} {% if customer %}({{ customer.email }}){% endif %}"> </a>
+              </li>
+            {% endif %}
             <li class="search_link">
               <a href="javascript:void(0)" class="icon-search dropdown_link" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
             </li>
