@@ -48,7 +48,7 @@
   </div>
   {% if section.settings.search_enabled %}
     <div class="dropdown_container search-box-c center" data-dropdown="search">
-      <div class="dropdown">
+      <div class="dropdown" data-autocomplete-{{ settings.enable_autocomplete }}>
         <form action="/search" class="header_search_form">
           {% if settings.search_option != 'everything' %}
             <input type="hidden" name="type" value="product" />
@@ -304,6 +304,7 @@
           {% else %}
             {% include 'menu' with section.settings.main_linklist2 %}
           {% endif %}
+          
           {% comment %}
           {% if section.settings.search_enabled %}
             <li class="search_container" data-autocomplete-{{ settings.enable_autocomplete }}>
@@ -320,6 +321,7 @@
             </li>
           {% endif %}
           {% endcomment %}
+          
         {% endcapture %}
 
         {% if section.settings.logo_position == "left" or section.settings.menu_position == "block" %}
