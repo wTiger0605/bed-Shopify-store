@@ -953,6 +953,8 @@ selectCallback = function(variant, selector) {
   {% if settings.show_multiple_currencies %}
     convertCurrencies();
   {% endif %}
+
+  changeSelectedVariant();
 };
 
 var productPage = {
@@ -4245,5 +4247,22 @@ function checkContainer () {
     });
   } else {
     setTimeout(checkContainer, 50); //wait 50 ms, then try again 
+  }
+}
+
+function changeSelectedVariant() {
+  var shopifySelectedValue = $('.single-option-selector').val();
+  console.log(shopifySelectedValue);
+
+  if ($('select[id^="product-select"]').length) {
+    $('select[id^="product-select"][style="display: none;"] option').each(function (index, element) {
+      var $this = $(this);
+      var value = $this.attr('value');
+      if (shopifySelectedValue === $this.text()) {
+        $('select[id^="product-select"] option').removeAttr('selected')
+        $this.attr('selected', 'selected')
+        $this.parent().val(value)
+      }
+    });
   }
 }

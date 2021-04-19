@@ -66,16 +66,10 @@
     {% endif %}
     {{ content_for_header }}
     {% include 'judgeme_core' %}
-{% render 'hs-cart-drawer' %}
-    <script async src="https://cdn.delm.io/deliverymessage.js"></script>
-    
-    
-    
-
-
-                  {% include 'bss-product-labels-configs' %}
-    
-                    </head>
+  {% comment %}{% render 'hs-cart-drawer' %}{% endcomment %}
+  <script async src="https://cdn.delm.io/deliverymessage.js"></script>
+  {% include 'bss-product-labels-configs' %}
+</head>
              
   {% if template contains "index" %}
     {% assign feature_image = true %}
@@ -226,7 +220,7 @@
     </script>
   {% include 'mw_PO_objects' %}
     {% comment %}{% include 'globo.options.scripts' %}{% endcomment %}
-{% render 'hs-cart-drawer-subscriptions' %}
+  {% comment %}{% render 'hs-cart-drawer-subscriptions' %}{% endcomment %}
 <script
   async
   src="https://eu-library.klarnaservices.com/lib.js"

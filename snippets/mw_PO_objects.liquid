@@ -46,21 +46,22 @@ window.mwProductOptionsObjects.onEvent = function (eventName, mwJquery) {
             window.KlarnaOnsiteService = window.KlarnaOnsiteService || []
             window.KlarnaOnsiteService.push({ eventName: 'refresh-placements' })
           });
-          setInterval(() => {
-            var shopifySelectedValue = $('.single-option-selector').val();
+          // setInterval(() => {
+          //   var shopifySelectedValue = $('.single-option-selector').val();
+          //   console.log(shopifySelectedValue);
 
-            if ($('select[id^="product-select"]').length) {
-              $('select[id^="product-select"][style="display: none;"] option').each(function (index, element) {
-                var $this = $(this);
-                var value = $this.attr('value');
-                if (shopifySelectedValue === $this.text()) {
-                  $('select[id^="product-select"] option').removeAttr('selected')
-                  $this.attr('selected', 'selected')
-                  $this.parent().val(value)
-                }
-              });
-            }
-          }, 10);
+          //   if ($('select[id^="product-select"]').length) {
+          //     $('select[id^="product-select"][style="display: none;"] option').each(function (index, element) {
+          //       var $this = $(this);
+          //       var value = $this.attr('value');
+          //       if (shopifySelectedValue === $this.text()) {
+          //         $('select[id^="product-select"] option').removeAttr('selected')
+          //         $this.attr('selected', 'selected')
+          //         $this.parent().val(value)
+          //       }
+          //     });
+          //   }
+          // }, 100);
         }
       }
     });
