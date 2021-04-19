@@ -38,7 +38,7 @@
       {% if section.settings.phone_number != blank %}
       <a href="tel:{{ section.settings.phone_link | replace: ' ', '' | replace: '+', '' | replace: '-', '' }}" class="icon-phone"></a>
       {% endif %}
-      <a href="javascript:void(0)" class="icon-search dropdown_link" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
+      <a href="javascript:void(0)" class="icon-search dropdown_link snize-custom-widget-opener" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
       {% if section.settings.show_cart %}
         <div class="cart_container">
           <a href="/cart" class="{% if section.settings.cart_icon == "cart" %}icon-cart{% else %}icon-bag{% endif %} mini_cart dropdown_link" title="{{ 'layout.general.cart' | t | escape }}" data-no-instant> <span class="cart_count">{{ cart.item_count }}</span></a>
@@ -344,7 +344,7 @@
               </li>
             {% endif %}
             <li class="search_link">
-              <a href="javascript:void(0)" class="icon-search dropdown_link" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
+              <a href="javascript:void(0)" class="icon-search dropdown_link snize-custom-widget-opener" title="{{ 'general.search.title' | t | escape }}" data-dropdown-rel="search"></a>
             </li>
             <li>
               <a href="/cart" class="{% if section.settings.cart_icon == "cart" %}icon-cart{% else %}icon-bag{% endif %} mini_cart dropdown_link" title="{{ 'layout.general.cart' | t | escape }}" data-no-instant> <span class="cart_count">{{ cart.item_count }}</span></a>

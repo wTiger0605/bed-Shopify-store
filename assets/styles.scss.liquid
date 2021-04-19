@@ -1547,7 +1547,7 @@ body.is-active {
         @include flexbox();
         @include align-items(center);
         z-index: 1;
-        background: #004973;
+        // background: #004973;
       }
     }
     > a, > a:visited, > a:active {
@@ -10714,7 +10714,7 @@ $delay: 0;
       align-items: center;
       justify-content: space-between;
       padding: 0 30px;
-      @media (max-width: 1100px) {
+      @media (max-width: 1124px) {
         padding: 0 20px;
       }
       @media (max-width: 1024px) {
@@ -10726,6 +10726,10 @@ $delay: 0;
       .logo {
         min-width: 120px;
         padding: 0;
+        @media (max-width: 1024px) {
+          min-width: 100px;
+          width: 10%;
+        }
       }
       .nav {
         width: auto;
@@ -10746,7 +10750,7 @@ $delay: 0;
             margin: 0 15px;
             &.icon-search {
               margin-left: 40px;
-              @media (max-width: 1100px) {
+              @media (max-width: 1124px) {
                 margin-left: 24px;
               }
               @media (max-width: 1024px) {
@@ -10756,7 +10760,7 @@ $delay: 0;
             @media (max-width: 1240px) {
               font-size: 16px;
             }
-            @media (max-width: 1100px) {
+            @media (max-width: 1124px) {
               margin: 0 5px;
             }
             @media (max-width: 1024px) {
