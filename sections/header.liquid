@@ -47,6 +47,7 @@
     </div>
 
   </div>
+  {% comment %}
   {% if section.settings.search_enabled %}
     <div class="dropdown_container search-box-c center" data-dropdown="search">
       <div class="dropdown" data-autocomplete-{{ settings.enable_autocomplete }}>
@@ -60,6 +61,7 @@
       </div>
     </div>
   {% endif %}
+  {% endcomment %}
   <div class="dropdown_container" data-dropdown="menu">
     <div class="dropdown">
       <ul class="menu" id="mobile_menu">
