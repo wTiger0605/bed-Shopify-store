@@ -26,6 +26,7 @@
   {% else %}
   
     <form action="/cart" method="post" id="cart_form">
+      <h1>You have <strong class="h1-ctn-color">{{cart.item_count}}</strong> itme{% if cart.item_count >1 %}s{% endif %} in your basket</h1>
       <div class="section clearfix">
         <div class="eleven columns medium-down--one-whole">
           {% assign total_saving = 0 %}
@@ -37,16 +38,23 @@
   
             <div class="section clearfix {% include 'mw_PO_cart', code: 'class' %}" {% include 'mw_PO_cart' with item, code: 'style' %}>
               {% include 'mw_PO_cart' with item, code: 'relation' %}
-              <div class="five columns alpha">
+              <div class="seven columns alpha">
                 <a href="{{ item.url }}" title="{{ item.title | escape }}" class="cart_page_image">
                   {% include 'image-element', image: item, alt: item.title, object_fit: settings.align_height, max_height: settings.collection_height %}
                 </a>
+                <div class="product-quantity-box left">
+                  <p>Quantity</p>
+                  <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
+                  <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
+                  <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+                  <p><a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove X</a></p>
+                </div>
               </div>
   
-              <div class="eleven columns omega cart_content_info">
-                <h3>
+              <div class="nine columns omega cart_content_info">
+                <h5>
                   <a href="{{ item.url }}">{{ item.product.title }}</a>
-                </h3>
+                </h5>
   
                 {% unless item.product.has_only_default_variant or item.variant.title contains "Title" %}
                   <p class="meta">
@@ -90,11 +98,6 @@
                   {% endif %}
                 </p>
   
-                <div class="product-quantity-box left">
-                  <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
-                  <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
-                  <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
-                </div>
               </div>
             </div>
           {% endfor %}
@@ -102,6 +105,7 @@
   
         <div class="five columns medium-down--one-whole">
           <div class="section clearfix">
+            <h1>Basket Summery</h1>
             <div class="subtotal">
               <p class="cart_subtotal js-cart_subtotal">
                 <span class="right">
