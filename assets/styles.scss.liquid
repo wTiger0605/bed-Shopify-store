@@ -3858,7 +3858,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="sea
     outline: none;
     background: #fff;
     color: #5f6a7d;
-    font: 13px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 13px "Century Gothic", sans-serif;
     margin-bottom: 15px;
     -webkit-appearance: none;
     text-rendering: optimizeLegibility;
@@ -11820,7 +11820,14 @@ ul.tabs li.current{
               span {
                 font-size: 12px;
                 left: 0;
+                &.icon-minus::before {
+                  content: "\f068 ";
+                }
+                &.icon-plus::before {
+                  content: "\f067 ";
+                }
                 &::before {
+                  font-family: "FontAwesome";
                   line-height: 31px;
                 }
               }
@@ -11829,6 +11836,9 @@ ul.tabs li.current{
               width: 40px;
               border: none;
               background: #f0f0f0;
+              color: {{ settings.headline_color }};
+              font-size: 16px;
+              font-weight: bold;
             }
           }
         }

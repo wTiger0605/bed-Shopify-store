@@ -120,6 +120,19 @@
                 </span>
                 <span>{{ 'cart.general.subtotal' | t }}</span>
               </p>
+              <p class="cart_subtotal js-cart_subtotal">
+                <span class="right">
+                  <span class="money" >{{ cart.total_price | money }}</span>
+                  {% comment %}
+                  <span class="money">
+                    <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
+                      {{ cart.total_price | money }}
+                    </span>
+                  </span>
+                  {% endcomment %}
+                </span>
+                <span>{{ 'cart.general.subtotal' | t }}</span>
+              </p> 
   
               {% if section.settings.display_savings %}
                 <p class="cart_savings sale">
