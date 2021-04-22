@@ -2283,8 +2283,11 @@ div.cart_content form {
 }
 
 .cart .cart_subtotal {
-  font-weight: bold;
+  // font-weight: bold;
   font-size: larger;
+  .right {
+    font-weight: bold;
+  }
 }
 
 .cart_content .cart_subtotal {
@@ -11762,6 +11765,7 @@ ul.tabs li.current{
   border-color: #000 !important; 
 }
 .cart-section {
+  background: #f0f0f0;
   form#cart_form {
     background-color: #f0f0f0;
     padding: 40px 10px;
@@ -11779,6 +11783,34 @@ ul.tabs li.current{
           background-color: white;
           margin: 30px 0 0 0;
           padding: 30px;
+        }
+        .featured-collection-container-c {
+          box-shadow: -1px 1px 10px lightgrey;
+          background-color: white;
+          margin: 30px 0 0 0;
+          padding: 30px;
+          .container {
+            padding: 0;
+            .homepage_content {
+              h2.title {
+                text-align: left;
+              }
+            }
+            .slider-gallery.products-slider {
+              .product-wrap {
+                span.title {
+                  font-size: small;
+                }
+                span.price {
+                  font-size: medium;
+                  font-weight: bold;
+                }
+              }
+            }
+            .see-all-c {
+              display: none;
+            }
+          }
         }
         .seven.columns.alpha {
           .cart_page_image {
@@ -11875,11 +11907,39 @@ ul.tabs li.current{
       .five.columns {
         background-color: {{settings.header_bg_color}};
         color: white;
+        padding: 20px 0;
         h1 {
           color: white;
         }
         .subtotal {
           border: none;
+          .prices-calc-c {
+            margin: 20px 0 30px;
+            border-bottom: 1px solid white;
+            .cart_subtotal {
+              &:first-child {
+                margin: 0;
+              }
+            }
+          }
+          .cart_ordertotal {
+            margin-bottom: 30px;
+          }
+          button.action_button.add_to_cart {
+            color: white;
+            background: #f89201;
+            text-transform: capitalize;
+            font-size: 15px;
+            font-weight: 600;
+            height: auto;
+            border: none;
+            border-radius: 30px;
+            padding: 20px;
+            margin: 20px 0;
+          }
+          .featured-links {
+            display: none;
+          }
         }
       }
       &:first-of-type {

@@ -100,40 +100,43 @@
   
               </div>
             </div>
-          {% endfor %}
+            {% endfor %}
+          <div class="section featured-collection-container-c">
+            {% include 'include-featured-collection' %}
+          </div>
         </div>
   
         <div class="five columns medium-down--one-whole">
           <div class="section clearfix">
             <h1>Basket Summery</h1>
             <div class="subtotal">
-              <p class="cart_subtotal js-cart_subtotal">
+              <div class="prices-calc-c">
+                <p class="cart_subtotal js-cart_subtotal">
+                  <span class="right">
+                    <span class="money" >{{ cart.total_price | money }}</span>
+                    {% comment %}
+                    <span class="money">
+                      <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
+                        {{ cart.total_price | money }}
+                      </span>
+                    </span>
+                    {% endcomment %}
+                  </span>
+                  <span>{{ 'cart.general.subtotal' | t }}</span>
+                </p>
+                <p class="cart_subtotal js-cart_subtotal">
+                  <span class="right">
+                    <span class="money" >FREE</span>
+                  </span>
+                  <span>Delivery</span>
+                </p>
+              </div>
+              <p class="cart_subtotal cart_ordertotal js-cart_subtotal">
                 <span class="right">
                   <span class="money" >{{ cart.total_price | money }}</span>
-                  {% comment %}
-                  <span class="money">
-                    <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
-                      {{ cart.total_price | money }}
-                    </span>
-                  </span>
-                  {% endcomment %}
                 </span>
-                <span>{{ 'cart.general.subtotal' | t }}</span>
+                <span>Order total</span>
               </p>
-              <p class="cart_subtotal js-cart_subtotal">
-                <span class="right">
-                  <span class="money" >{{ cart.total_price | money }}</span>
-                  {% comment %}
-                  <span class="money">
-                    <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
-                      {{ cart.total_price | money }}
-                    </span>
-                  </span>
-                  {% endcomment %}
-                </span>
-                <span>{{ 'cart.general.subtotal' | t }}</span>
-              </p> 
-  
               {% if section.settings.display_savings %}
                 <p class="cart_savings sale">
                   {% if total_saving > 0 %}
@@ -238,6 +241,57 @@
         "type": "richtext",
         "id": "cart_message",
         "label": "Cart message"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Collection Heading",
+        "default": "Featured collection"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+      },
+      {
+        "type": "radio",
+        "id": "collection_style",
+        "label": "Collection layout",
+        "default": "grid",
+        "options": [
+          {
+            "value": "slider",
+            "label": "Slider"
+          },
+          {
+            "value": "grid",
+            "label": "Grid"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "collection_description",
+        "label": "Show description",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "products_per",
+        "label": "Products per row",
+        "min": 2,
+        "max": 7,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "products_limit",
+        "label": "Limit products",
+        "min": 2,
+        "max": 50,
+        "step": 1,
+        "default": 9
       }
     ],
     "blocks": [
