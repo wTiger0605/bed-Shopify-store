@@ -8,7 +8,6 @@
   <div class="section clearfix">
     <div class="sixteen columns">
       <h1>{{ 'cart.general.title' | t }}</h1>
-      <div class="feature_divider"></div>
     </div>
   </div>
   
@@ -26,7 +25,7 @@
   {% else %}
   
     <form action="/cart" method="post" id="cart_form">
-      <h1>You have <strong class="h1-ctn-color">{{cart.item_count}}</strong> itme{% if cart.item_count >1 %}s{% endif %} in your basket</h1>
+      <h1>You have <strong class="h1-ctn-color">{{cart.item_count}}</strong> item{% if cart.item_count >1 %}s{% endif %} in your basket</h1>
       <div class="section clearfix">
         <div class="eleven columns medium-down--one-whole">
           {% assign total_saving = 0 %}
