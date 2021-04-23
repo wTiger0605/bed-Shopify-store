@@ -11775,6 +11775,9 @@ ul.tabs li.current{
       @media (max-width: 480px) {
         text-align: center;
       }
+      &.cart-page-title-c {
+        margin-left: 20px;
+      }
     }
     form#cart_form {
       background-color: #f0f0f0;
@@ -11792,7 +11795,8 @@ ul.tabs li.current{
           font-size: 26px;
         }
         @media (max-width: 480px) {
-          font-size: 22px;
+          font-size: 20px;
+          margin: 0 10px 10px;
         }
       }
       p {
@@ -11941,14 +11945,20 @@ ul.tabs li.current{
             p.meta {
               margin: 0;
               span.label {
-                display: none;
+                font-weight: bold;
+                font-size: 13px;
+                color: #000;
+                margin: 0;
               }
             }
             span {
               font-size: 14px;
               color: {{ settings.headline_color }};
+              display: inline-block;
               &.option-cart-title {
-                display: none;
+                font-size: 13px;
+                color: #000;
+                margin: 0;
               }
               &.mw-configure-link-container {
                 background: orange;
