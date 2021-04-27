@@ -4200,10 +4200,13 @@ $(document).ready(function() {
   // })
 
   checkContainer();
+  checkCartDiscount();
 });
 
 
 function checkContainer () {
+  console.log('checkContainer');
+
   if($('.mw-product-options .mw-option-swatch').is(':visible')){ //if the container is visible on the page
     let size_options = ['Small Single', 'Single', 'Small Double', 'Double', 'King', 'Super King'];
     let option_values = ['Orthopaedic Mattress', 'Memory Foam Mattress', 'Deluxe Ortho Mattress', 
@@ -4250,9 +4253,26 @@ function checkContainer () {
   }
 }
 
+function checkCartDiscount() {
+  // console.log('checkCartDiscount');
+  if($('#dcodeInfo .dcode-discount-value-cell').is(':visible')){
+    $('.cart_discount_price .right').empty();
+    $('#dcodeInfo .dcode-discount-value-cell').clone().appendTo('.cart_discount_price .right');
+    // $('#dcodeInfo').addClass('hide_price');
+    hideDiscount();
+  } else {
+    setTimeout(checkCartDiscount, 50);
+  }
+}
+
+function hideDiscount() {
+  $('#dcodeInfo').addClass('hide_price');
+  setTimeout(hideDiscount, 50);
+}
+
 function changeSelectedVariant() {
   var shopifySelectedValue = $('.single-option-selector').val();
-  console.log(shopifySelectedValue);
+  // console.log(shopifySelectedValue);
 
   if ($('select[id^="product-select"]').length) {
     $('select[id^="product-select"][style="display: none;"] option').each(function (index, element) {

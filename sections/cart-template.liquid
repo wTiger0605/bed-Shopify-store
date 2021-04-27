@@ -46,7 +46,7 @@
                   <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
                   <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
                   <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
-                  <p><a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove X</a></p>
+                  <p><a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove</a></p>
                 </div>
               </div>
   
@@ -110,20 +110,19 @@
             <h1>Basket Summery</h1>
             <div class="subtotal">
               <div class="prices-calc-c">
-                <p class="cart_subtotal js-cart_subtotal">
+                <p class="cart_original_total js-cart_subtotal">
                   <span class="right">
                     <span class="money" >{{ cart.total_price | money }}</span>
-                    {% comment %}
-                    <span class="money">
-                      <span class="hulkapps-cart-original-total" data-key="{{item.key}}" >
-                        {{ cart.total_price | money }}
-                      </span>
-                    </span>
-                    {% endcomment %}
                   </span>
                   <span>{{ 'cart.general.subtotal' | t }}</span>
                 </p>
-                <p class="cart_subtotal js-cart_subtotal">
+                <p class="cart_discount_price js-cart_subtotal">
+                  <span class="right">
+                    <span class="money" ></span>
+                  </span>
+                  <span>Discount</span>
+                </p>
+                <p class="cart_ship_price js-cart_subtotal">
                   <span class="right">
                     <span class="money" >FREE</span>
                   </span>
@@ -179,7 +178,7 @@
               {% endif %}
   
               <p>
-                <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}{{ 'cart.general.checkout' | t }}</button>
+                <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}Secure Checkout</button>
               </p>
   
               {% if content_for_additional_checkout_buttons %}

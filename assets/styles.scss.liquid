@@ -11946,7 +11946,7 @@ ul.tabs li.current{
               margin: 0;
               span.label {
                 font-weight: bold;
-                font-size: 13px;
+                font-size: 14px;
                 color: #000;
                 margin: 0;
               }
@@ -11956,7 +11956,7 @@ ul.tabs li.current{
               color: {{ settings.headline_color }};
               display: inline-block;
               &.option-cart-title {
-                font-size: 13px;
+                font-size: 14px;
                 color: #000;
                 margin: 0;
               }
@@ -11999,14 +11999,26 @@ ul.tabs li.current{
             .prices-calc-c {
               margin: 20px 0 30px;
               border-bottom: 1px solid white;
-              .cart_subtotal {
-                &:first-child {
-                  margin: 0;
+              .cart_original_total, .cart_ship_price, .cart_discount_price {
+                font-size: larger;
+                .right {
+                  font-weight: bold;
                 }
               }
             }
             .cart_ordertotal {
               margin-bottom: 30px;
+              .dcodeOldSubtotal {
+                display: none;
+              }
+              #dcodeNewSubtotal {
+                .dcodeLineThrough.money {
+                  display: none;
+                }
+                br {
+                  display: none;
+                }
+              }
             }
             button.action_button.add_to_cart {
               color: white;
@@ -12030,6 +12042,9 @@ ul.tabs li.current{
         }
       }
     }
+  }
+  .cart__blocks {
+    margin: 0;
   }
   // background-color: #f0f0f0;
   // .cart-container-c {
@@ -12164,4 +12179,7 @@ ul.tabs li.current{
     left: 20px !important;
     width: calc(100% - 40px) !important;
   }
+}
+.hide_price {
+  display: none;
 }
