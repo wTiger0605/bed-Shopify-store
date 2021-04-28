@@ -42,10 +42,14 @@
                   {% include 'image-element', image: item, alt: item.title, object_fit: settings.align_height, max_height: settings.collection_height %}
                 </a>
                 <div class="product-quantity-box left">
-                  <p>Quantity</p>
-                  <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
-                  <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
-                  <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+                  <div class="quantity-wrapper-c">
+                    <p>Quantity</p>
+                    <div class="quantity-controller-c">
+                      <span class="ss-icon product-minus js-change-quantity" data-func="minus"><span class="icon-minus"></span></span>
+                      <input type="number" min="0" size="2" class="quantity" name="updates[]" id="updates_{{ item.id }}" value="{{ item.quantity }}" data-line-id="{{ forloop.index }}" {% if settings.limit_quantity and item.variant.inventory_management != blank and item.variant.inventory_quantity > 0 and item.variant.inventory_policy == "deny" %}max="{{ item.variant.inventory_quantity }}"{% endif %} />
+                      <span class="ss-icon product-plus js-change-quantity" data-func="plus"><span class="icon-plus"></span></span>
+                    </div>
+                  </div>
                   <p><a href="/cart/change?line={{ forloop.index }}&quantity=0">Remove</a></p>
                 </div>
               </div>
@@ -180,6 +184,10 @@
               <p>
                 <button type="submit" class="action_button add_to_cart" id="checkout" name="checkout">{% if settings.show_lock_icon %}<span class="icon-lock"></span>{% endif %}Secure Checkout</button>
               </p>
+              <div>
+                <p class="Klaran-cart-heading-c">Going to pay with <strong>Klarna</strong>?</p>
+                <p class="Klaran-cart-desc-c">Choose Klrana option at the final stage of the checkout</p>
+              </div>
   
               {% if content_for_additional_checkout_buttons %}
                 <div class="additional-checkout-buttons">

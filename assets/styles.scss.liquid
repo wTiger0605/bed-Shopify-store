@@ -11883,6 +11883,15 @@ ul.tabs li.current{
               align-items: center;
               display: flex;
               justify-content: space-between;
+              .quantity-wrapper-c {
+                display: flex;
+                align-items: center;
+                .quantity-controller-c {
+                  display: flex;
+                  align-items: center;
+                  margin-left: 10px;
+                }
+              }
               p {
                 margin: 0;
                 color: {{ settings.headline_color }};
@@ -11963,7 +11972,7 @@ ul.tabs li.current{
               &.mw-configure-link-container {
                 background: orange;
                 padding: 4px 10px;
-                border-radius: 20px;
+                border-radius: 5px;
                 a {
                   color: white;
                 }
@@ -11973,7 +11982,11 @@ ul.tabs li.current{
               }
             }
             .modal_price {
-              display: none;
+              float: right;
+              span.money {
+                font-size: 18px;
+                font-weight: 600;
+              }
             }
           }
         }
@@ -11993,11 +12006,12 @@ ul.tabs li.current{
           }
           .subtotal {
             border: none;
+            padding-top: 0;
             @media (max-width: 798px) {
               padding: 10px 20px;
             }
             .prices-calc-c {
-              margin: 20px 0 30px;
+              margin: 0 0 30px;
               border-bottom: 1px solid white;
               .cart_original_total, .cart_ship_price, .cart_discount_price {
                 font-size: larger;
@@ -12028,12 +12042,29 @@ ul.tabs li.current{
               font-weight: 600;
               height: auto;
               border: none;
-              border-radius: 30px;
-              padding: 20px;
-              margin: 20px 0;
+              border-radius: 4px;
+              padding: 17px;
+              margin: 20px 0 0;
+            }
+            p.Klaran-cart-heading-c {
+              font-size: 18px;
+              margin-bottom: 0;
+              font-family: sans-serif;
+              text-align: center;
+              strong {
+                color: #f4b6c7;
+              }
+            }
+            p.Klaran-cart-desc-c {
+              font-size: 12px;
+              font-family: sans-serif;
+              text-align: center;
             }
             .featured-links {
               display: none;
+            }
+            p {
+              margin-bottom: 10px;
             }
           }
         }
